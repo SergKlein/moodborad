@@ -1,0 +1,182 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+ # Moodboard Project Development Rules
+
+You are an expert full-stack developer working on the Moodboard AI Interior Design Platform. Follow these rules to maintain high quality and consistency throughout the project.
+
+## Core Principles
+
+1. **Code Quality**
+   - Write clean, maintainable TypeScript code
+   - Use proper type annotations and avoid `any`
+   - Follow functional programming principles
+   - Keep components small and focused
+   - Use meaningful variable and function names
+
+2. **Architecture**
+   - Follow Domain-Driven Design principles
+   - Organize code by feature/domain
+   - Keep business logic in services
+   - Use React Server Components by default
+   - Only use 'use client' when necessary
+
+3. **Performance**
+   - Implement proper code splitting
+   - Optimize images and assets
+   - Use proper caching strategies
+   - Monitor and optimize bundle size
+   - Implement proper loading states
+
+4. **Security**
+   - Validate all user inputs
+   - Implement proper authentication flows
+   - Use environment variables for secrets
+   - Follow OWASP security guidelines
+   - Implement rate limiting where needed
+
+## Project Structure
+
+```
+src/
+├── app/(site)             
+    ├──(auth)
+├── components/           # React components
+│   ├── ui/               # Reusable UI components
+│   └── [feature]/        # Feature-specific components
+├── lib/                  # Shared utilities
+├── services/             # Business logic services
+├── types/                # TypeScript types
+└── styles/              # Global styles
+```
+
+## Coding Standards
+
+1. **Components**
+   - Use TypeScript for all components
+   - Implement proper error boundaries
+   - Add loading and error states
+   - Use proper prop validation
+   - Document complex logic
+
+2. **State Management**
+   - Use React Server Components when possible
+   - Implement proper form validation
+   - Use React Query for server state
+   - Keep client state minimal
+   - Use proper caching strategies
+
+3. **Styling**
+   - Use Tailwind CSS for styling
+   - Follow mobile-first approach
+   - Use CSS variables for theming
+   - Implement proper dark mode
+   - Use proper responsive design
+
+4. **Testing**
+   - Write unit tests for critical logic
+   - Implement E2E tests for flows
+   - Test error scenarios
+   - Test accessibility
+   - Test performance
+
+## Development Process
+
+1. **Before Implementation**
+   - Analyze requirements thoroughly
+   - Consider edge cases
+   - Plan the implementation
+   - Consider performance implications
+   - Review security implications
+
+2. **During Implementation**
+   - Write clean, documented code
+   - Follow TypeScript best practices
+   - Implement proper error handling
+   - Add necessary tests
+   - Consider accessibility
+
+3. **After Implementation**
+   - Review code quality
+   - Test edge cases
+   - Check performance
+   - Verify security
+   - Update documentation
+
+## Best Practices
+
+1. **Authentication**
+   - Use NextAuth.js for auth
+   - Implement proper session handling
+   - Add rate limiting
+   - Validate tokens properly
+   - Handle auth errors gracefully
+
+2. **API Design**
+   - Use proper HTTP methods
+   - Implement proper validation
+   - Add proper error responses
+   - Document API endpoints
+   - Use proper status codes
+
+3. **Database**
+   - Use Prisma for database access
+   - Implement proper migrations
+   - Add proper indexes
+   - Handle errors properly
+   - Use transactions when needed
+
+4. **UI/UX**
+   - Follow Vercel's design system
+   - Implement proper loading states
+   - Add proper error messages
+   - Make UI responsive
+   - Follow accessibility guidelines
+
+## Error Handling
+
+1. **Client-Side**
+   - Use proper error boundaries
+   - Show user-friendly messages
+   - Log errors properly
+   - Handle network errors
+   - Implement retries when appropriate
+
+2. **Server-Side**
+   - Use proper error classes
+   - Log errors with context
+   - Return proper status codes
+   - Handle edge cases
+   - Implement proper fallbacks
+
+## Performance Guidelines
+
+1. **Frontend**
+   - Use proper code splitting
+   - Optimize images
+   - Implement proper caching
+   - Use proper loading strategies
+   - Monitor bundle size
+
+2. **Backend**
+   - Use proper database indexes
+   - Implement caching
+   - Optimize queries
+   - Handle rate limiting
+   - Monitor performance
+
+Remember: Always prioritize code quality, security, and user experience. Take time to plan before implementing, and always consider the long-term maintainability of the code.
+
+
+Rule for handling technical limitations
+
+When encountering any limitations that prevent completing a task according to requirements:
+
+Immediately report the problem. As soon as it becomes clear that there is a technical, informational, or other limitation that prevents completing the task as requested, it should be reported immediately.
+Be honest about your capabilities. Directly acknowledge limitations instead of trying to work around them or creating the appearance of completing the task.
+Suggest alternative solutions. After reporting the problem, offer workarounds or alternative approaches that may help achieve similar results.
+Clarify further instructions. Ask how to proceed in the given situation - whether to continue with existing limitations or wait until access to necessary resources becomes available.
+Use available tools. If there are tools that can help overcome limitations (such as web_search for viewing websites), suggest using them, demonstrating initiative in solving the problem.
+This approach ensures transparency in work, saves time, and allows for timely adjustment of the task or expectations of the result.

@@ -1,15 +1,25 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { createCheckoutSession, createCustomerPortalSession } from './stripe';
-import { withTeam } from '@/lib/auth/middleware';
+import { assignPlan } from '@/modules/credits';
 
-export const checkoutAction = withTeam(async (formData, team) => {
-  const priceId = formData.get('priceId') as string;
-  await createCheckoutSession({ team: team, priceId });
-});
+/**
+ * Обрабатывает запрос на подписку, назначая план команде
+ * через внутреннюю систему кредитов
+ */
+export async function handleSubscription(teamId: number, planId: string) {
+  try {
+    await assignPlan(teamId, parseInt(planId));
+    return redirect('/dashboard?success=subscription-updated');
+  } catch (error) {
+    console.error('Error handling subscription:', error);
+    return redirect('/dashboard?error=subscription-failed');
+  }
+}
 
-export const customerPortalAction = withTeam(async (_, team) => {
-  const portalSession = await createCustomerPortalSession(team);
-  redirect(portalSession.url);
-});
+/**
+ * Перенаправляет на панель управления пользователя
+ */
+export async function handleCustomerPortal() {
+  return redirect('/dashboard/settings/billing');
+}

@@ -1,0 +1,254 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Testing Rules and Guidelines
+
+## Core Testing Principles
+
+1. **Test Pyramid**
+   - Unit Tests (70%)
+   - Integration Tests (20%)
+   - E2E Tests (10%)
+   - Visual Regression Tests
+   - Performance Tests
+
+2. **Testing Philosophy**
+   - Test behavior, not implementation
+   - Keep tests simple and focused
+   - Follow AAA pattern (Arrange, Act, Assert)
+   - Write maintainable tests
+   - Test edge cases and error scenarios
+
+## Unit Testing
+
+1. **Component Testing**
+   ```typescript
+   // Component test structure
+   describe('Component', () => {
+     it('should render correctly', () => {
+       const { container } = render(<Component />)
+       expect(container).toMatchSnapshot()
+     })
+
+     it('should handle user interactions', async () => {
+       const onAction = vi.fn()
+       render(<Component onAction={onAction} />)
+       
+       await userEvent.click(screen.getByRole('button'))
+       expect(onAction).toHaveBeenCalled()
+     })
+   })
+   ```
+
+2. **Hook Testing**
+   ```typescript
+   // Hook test structure
+   describe('useHook', () => {
+     it('should return initial state', () => {
+       const { result } = renderHook(() => useHook())
+       expect(result.current).toBeDefined()
+     })
+
+     it('should handle state updates', () => {
+       const { result } = renderHook(() => useHook())
+       act(() => {
+         result.current.update()
+       })
+       expect(result.current.state).toEqual(expected)
+     })
+   })
+   ```
+
+3. **Service Testing**
+   ```typescript
+   // Service test structure
+   describe('Service', () => {
+     beforeEach(() => {
+       vi.clearAllMocks()
+     })
+
+     it('should handle successful operations', async () => {
+       const result = await service.operation()
+       expect(result).toEqual(expected)
+     })
+
+     it('should handle errors', async () => {
+       await expect(service.operation()).rejects.toThrow()
+     })
+   })
+   ```
+
+## Integration Testing
+
+1. **API Routes**
+   ```typescript
+   // API route test structure
+   describe('API Route', () => {
+     it('should handle valid requests', async () => {
+       const response = await fetch('/api/route', {
+         method: 'POST',
+         body: JSON.stringify(data)
+       })
+       expect(response.status).toBe(200)
+     })
+
+     it('should validate input', async () => {
+       const response = await fetch('/api/route', {
+         method: 'POST',
+         body: JSON.stringify(invalidData)
+       })
+       expect(response.status).toBe(400)
+     })
+   })
+   ```
+
+2. **Database Operations**
+   ```typescript
+   // Database test structure
+   describe('Database Operations', () => {
+     beforeAll(async () => {
+       await prisma.$connect()
+     })
+
+     afterAll(async () => {
+       await prisma.$disconnect()
+     })
+
+     beforeEach(async () => {
+       await prisma.$transaction([
+         prisma.user.deleteMany(),
+         // Clean other tables
+       ])
+     })
+
+     it('should create records', async () => {
+       const result = await prisma.user.create({
+         data: userData
+       })
+       expect(result).toBeDefined()
+     })
+   })
+   ```
+
+## E2E Testing
+
+1. **User Flows**
+   ```typescript
+   // E2E test structure
+   describe('User Flow', () => {
+     beforeEach(async () => {
+       await page.goto('/')
+     })
+
+     test('complete authentication flow', async () => {
+       await page.fill('[name=email]', 'user@example.com')
+       await page.fill('[name=password]', 'password')
+       await page.click('button[type=submit]')
+       
+       await expect(page).toHaveURL('/dashboard')
+     })
+   })
+   ```
+
+2. **Critical Paths**
+   - Authentication flows
+   - Project creation
+   - Image generation
+   - Payment processing
+   - Error scenarios
+
+## Performance Testing
+
+1. **Metrics**
+   - First Contentful Paint (FCP)
+   - Largest Contentful Paint (LCP)
+   - Time to Interactive (TTI)
+   - Total Blocking Time (TBT)
+   - Cumulative Layout Shift (CLS)
+
+2. **Load Testing**
+   - Response times
+   - Concurrent users
+   - Resource usage
+   - Error rates
+   - Recovery time
+
+## Testing Best Practices
+
+1. **Code Organization**
+   - Keep tests close to implementation
+   - Use descriptive test names
+   - Group related tests
+   - Share test utilities
+   - Mock external dependencies
+
+2. **Test Data**
+   - Use factories for test data
+   - Avoid hard-coded values
+   - Clean up after tests
+   - Use realistic data
+   - Handle edge cases
+
+3. **Assertions**
+   - Make assertions specific
+   - Test one thing at a time
+   - Use appropriate matchers
+   - Check error cases
+   - Verify side effects
+
+4. **Mocking**
+   - Mock external services
+   - Use spy functions
+   - Stub complex operations
+   - Verify mock calls
+   - Reset mocks between tests
+
+## CI/CD Integration
+
+1. **Pipeline Configuration**
+   ```yaml
+   # Example GitHub Actions workflow
+   name: Test
+   on: [push, pull_request]
+   jobs:
+     test:
+       runs-on: ubuntu-latest
+       steps:
+         - uses: actions/checkout@v4
+         - uses: actions/setup-node@v4
+         - run: npm ci
+         - run: npm test
+         - run: npm run test:e2e
+   ```
+
+2. **Coverage Requirements**
+   - Minimum 80% coverage
+   - Critical paths 100%
+   - Track coverage trends
+   - Block merges on failures
+   - Report coverage metrics
+
+## Testing Tools
+
+1. **Core Tools**
+   - Vitest for unit/integration tests
+   - Playwright for E2E tests
+   - MSW for API mocking
+   - Testing Library for components
+   - Lighthouse for performance
+
+2. **Helper Libraries**
+   - faker-js for test data
+   - ts-jest for TypeScript
+   - jest-dom for DOM assertions
+   - user-event for interactions
+   - snapshot-diff for comparisons
+
+Remember:
+- Write tests before fixing bugs
+- Keep tests up to date
+- Run tests before commits
+- Review test coverage regularly
+- Document testing patterns

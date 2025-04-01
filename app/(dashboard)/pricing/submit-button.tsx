@@ -4,7 +4,11 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import { useFormStatus } from 'react-dom';
 
-export function SubmitButton() {
+interface SubmitButtonProps {
+  label?: string;
+}
+
+export function SubmitButton({ label = 'Get Started' }: SubmitButtonProps) {
   const { pending } = useFormStatus();
 
   return (
@@ -20,7 +24,7 @@ export function SubmitButton() {
         </>
       ) : (
         <>
-          Get Started
+          {label}
           <ArrowRight className="ml-2 h-4 w-4" />
         </>
       )}

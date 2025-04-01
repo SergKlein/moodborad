@@ -1,0 +1,1 @@
+ALTER TABLE "teams" ADD COLUMN "plan_id" text;

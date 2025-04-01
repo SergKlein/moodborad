@@ -1,0 +1,207 @@
+---
+description: 
+globs: *.tsx
+alwaysApply: false
+---
+ # Design Agent Rules
+
+More information you can get in thr docs/desing.md
+
+## Core Responsibilities
+
+1. **Design System Compliance**
+   - Follow design system documentation strictly
+   - Maintain visual consistency across components
+   - Adhere to established color schemes and typography
+   - Use predefined spacing and sizing rules
+   - Implement specified animations and transitions
+
+2. **Component Development Protocol**
+   ```typescript
+   // Development sequence
+   interface DevelopmentProtocol {
+     step1: 'Create TypeScript interfaces'
+     step2: 'Write component tests'
+     step3: 'Implement base component'
+     step4: 'Add styling and variants'
+     step5: 'Implement animations'
+     step6: 'Add accessibility features'
+     step7: 'Document usage and props'
+   }
+   ```
+
+## Implementation Rules
+
+1. **Component Structure**
+   - Each component must be in its own directory
+   - Include TypeScript interface definitions
+   - Implement proper prop validation
+   - Follow established naming conventions
+   - Use consistent file structure
+
+2. **Styling Guidelines**
+   ```typescript
+   // Example component structure
+   /ComponentName/
+     index.ts
+     ComponentName.tsx
+     ComponentName.test.tsx
+     ComponentName.types.ts
+     ComponentName.styles.ts // if needed
+     README.md
+   ```
+
+3. **Code Quality Standards**
+   - Use TypeScript strictly
+   - Implement proper error boundaries
+   - Follow accessibility guidelines
+   - Maintain test coverage
+   - Document all props and variants
+
+## Design Principles
+
+1. **Visual Hierarchy**
+   - Follow minimalist design approach
+   - Maintain content-first philosophy
+   - Use whitespace effectively
+   - Implement consistent spacing
+   - Follow typography scale
+
+2. **Component Variants**
+   ```typescript
+   interface ComponentVariants {
+     size: 'sm' | 'md' | 'lg'
+     variant: 'primary' | 'secondary' | 'ghost'
+     state: 'default' | 'hover' | 'active' | 'disabled'
+   }
+   ```
+
+3. **Animation Standards**
+   - Use predefined animation tokens
+   - Implement smooth transitions
+   - Follow performance guidelines
+   - Respect user preferences
+   - Support reduced motion
+
+## Development Process
+
+1. **Before Implementation**
+   - Review design documentation
+   - Check existing components
+   - Plan component structure
+   - Create test cases
+   - Document requirements
+
+2. **During Implementation**
+   - Follow TDD approach
+   - Use established patterns
+   - Maintain consistency
+   - Consider edge cases
+   - Test accessibility
+
+3. **After Implementation**
+   - Review code quality
+   - Check performance
+   - Update documentation
+   - Add usage examples
+   - Create storybook stories
+
+## Quality Checklist
+
+1. **Visual Quality**
+   - [ ] Matches design system
+   - [ ] Responsive on all breakpoints
+   - [ ] Proper dark mode support
+   - [ ] Consistent spacing
+   - [ ] Smooth animations
+
+2. **Code Quality**
+   - [ ] TypeScript strict mode
+   - [ ] No any types
+   - [ ] Proper error handling
+   - [ ] Test coverage
+   - [ ] Documentation
+
+3. **Accessibility**
+   - [ ] ARIA labels
+   - [ ] Keyboard navigation
+   - [ ] Screen reader support
+   - [ ] Color contrast
+   - [ ] Focus management
+
+## Error Prevention
+
+1. **Common Pitfalls**
+   - Inconsistent spacing
+   - Missing TypeScript types
+   - Incomplete test coverage
+   - Poor accessibility
+   - Undocumented props
+
+2. **Required Validations**
+   ```typescript
+   interface ValidationChecks {
+     types: 'Check all TypeScript types'
+     props: 'Validate all props'
+     styles: 'Verify style consistency'
+     tests: 'Ensure test coverage'
+     a11y: 'Check accessibility'
+   }
+   ```
+
+## Documentation Requirements
+
+1. **Component Documentation**
+   ```markdown
+   # ComponentName
+   
+   ## Overview
+   Brief description of the component
+   
+   ## Props
+   | Prop | Type | Default | Description |
+   |------|------|---------|-------------|
+   
+   ## Examples
+   Usage examples with code
+   
+   ## Accessibility
+   Accessibility considerations
+   
+   ## Notes
+   Additional information
+   ```
+
+2. **Code Comments**
+   - Add JSDoc comments
+   - Document complex logic
+   - Explain key decisions
+   - Note edge cases
+   - Reference related components
+
+## Performance Guidelines
+
+1. **Optimization Rules**
+   - Use React.memo when needed
+   - Implement proper dependencies
+   - Optimize re-renders
+   - Lazy load when possible
+   - Monitor bundle size
+
+2. **Testing Performance**
+   - Component render time
+   - Animation smoothness
+   - Bundle size impact
+   - Memory usage
+   - Network payload
+
+## Remember
+
+- Quality over speed
+- Consistency is key
+- Document everything
+- Test thoroughly
+- Consider accessibility
+- Follow design system
+- Maintain performance
+- Review your work

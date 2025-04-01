@@ -1,0 +1,84 @@
+---
+description: 
+globs: *.md
+alwaysApply: false
+---
+# Markdown Documentation Standards
+
+## General Guidelines
+
+- All Markdown files must pass markdownlint checks without warnings
+- Use consistent spacing: one blank line before and after headers
+- Maximum line length of 120 characters
+- Use reference-style links for better readability
+- Include a table of contents for documents longer than 500 lines
+
+## Structure Requirements
+
+### Headers
+
+- Use ATX-style headers with `#` symbols
+- Maintain proper header hierarchy (don't skip levels)
+- Maximum header depth: 4 levels
+- Add blank lines before and after headers
+
+### Lists
+
+- Use `-` for unordered lists
+- Use `1.` for ordered lists
+- Maintain consistent indentation (2 spaces)
+- Add blank line after lists
+- Nested lists should be indented by 2 spaces
+
+### Code Blocks
+
+- Always specify language for syntax highlighting
+- Use triple backticks (```)
+- Include file path for code examples
+- Add meaningful comments in code blocks
+
+## Content Guidelines
+
+### Documentation Quality
+
+- Start with a clear overview/purpose
+- Include relevant examples
+- Provide context for technical terms
+- Use consistent terminology
+- Keep documentation up-to-date with code changes
+
+### Required Sections
+
+1. Overview/Purpose
+2. Prerequisites (if applicable)
+3. Installation/Setup (if applicable)
+4. Usage/Examples
+5. Configuration (if applicable)
+6. Troubleshooting (if applicable)
+7. References/Related Documentation
+
+### Writing Style
+
+- Use active voice
+- Keep sentences concise
+- Use consistent capitalization
+- Avoid jargon without explanation
+- Include relevant diagrams/screenshots where helpful
+
+## Validation Process
+
+### Pre-commit Checks
+
+- Run markdownlint
+- Verify all links are valid
+- Check for spelling errors
+- Validate code examples
+- Ensure proper formatting
+
+### Tools
+
+- markdownlint
+- markdown-toc (for table of contents)
+- prettier (for consistent formatting)
+- spell checker
+- link checker

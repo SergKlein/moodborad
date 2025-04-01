@@ -1,0 +1,173 @@
+---
+description: database
+globs: 
+alwaysApply: false
+---
+1. Select an Appropriate Database Interaction Tool
+	•	Utilize an Object-Relational Mapping (ORM) Tool: Employing an ORM simplifies database interactions by allowing you to work with database records using familiar programming constructs, reducing the need for raw SQL queries.
+	•	Prisma: An open-source, next-generation ORM for Node.js and TypeScript. Prisma provides a type-safe and intuitive API, streamlining database operations and enhancing developer productivity. It includes: ￼
+	•	Prisma Client: An auto-generated, type-safe query builder.
+	•	Prisma Migrate: A migration system for managing schema changes.
+	•	Prisma Studio: A GUI for viewing and editing data in your database.
+	•	Sequelize: A promise-based ORM for Node.js supporting various relational databases, including PostgreSQL. Sequelize offers robust transaction support, relations, and read replication, facilitating effective database management. ￼
+
+2. Organize Database Interaction Logic
+	•	Encapsulate Database Access Within API Routes or Server-side Functions: Next.js enables the creation of API routes within the application, allowing seamless integration with PostgreSQL and centralized server-side logic management.
+
+3. Manage Sensitive Information Securely
+	•	Store Database Credentials in Environment Variables: Utilize .env files to keep sensitive information, such as database connection strings, out of your codebase, enhancing security and maintainability.
+
+4. Implement Robust Error Handling and Data Validation
+	•	Incorporate Comprehensive Error Handling: Anticipate and manage potential exceptions, such as connection failures or data integrity violations, to maintain application stability.
+	•	Validate Incoming Data: Ensure data conforms to expected formats and types before database insertion to prevent errors and security vulnerabilities.
+
+5. Optimize Performance
+	•	Implement Lazy Loading: Retrieve data only when necessary to reduce server load and improve response times.
+	•	Optimize Database Queries: Minimize the number of queries and select only required fields to enhance performance and reduce latency.
+
+6. Conduct Thorough Testing and Monitoring
+	•	Develop Unit and Integration Tests: Create tests to verify the correctness of database interactions and ensure application reliability.
+	•	Implement Logging and Monitoring: Track database operations to detect and address issues promptly, maintaining application health.
+
+
+	# Database Development Rules
+
+## Core Database Principles
+
+1. **Schema Design**
+   - Clear naming conventions
+   - Proper relationships
+   - Appropriate indexes
+   - Data normalization
+   - Type safety
+
+2. **Performance**
+   - Query optimization
+   - Proper indexing
+   - Connection pooling
+   - Query caching
+   - Batch operations
+
+## Prisma Implementation
+
+1. **Schema**
+   ```prisma
+   // Model structure
+   model Example {
+     id        String   @id @default(cuid())
+     createdAt DateTime @default(now())
+     updatedAt DateTime @updatedAt
+     
+     // Relations
+     userId    String
+     user      User     @relation(fields: [userId], references: [id])
+     
+     // Indexes
+     @@index([userId])
+   }
+   ```
+
+2. **Queries**
+   ```typescript
+   // Query structure
+   const result = await prisma.example.findMany({
+     where: {
+       // Conditions
+     },
+     select: {
+       // Fields
+     },
+     include: {
+       // Relations
+     },
+   });
+   ```
+
+3. **Mutations**
+   ```typescript
+   // Transaction example
+   await prisma.$transaction(async (tx) => {
+     // Multiple operations
+     // Rollback on error
+   });
+   ```
+
+## Security Measures
+
+1. **Data Access**
+   - Row-level security
+   - Input validation
+   - Query sanitization
+   - Access control
+   - Audit logging
+
+2. **Sensitive Data**
+   - Data encryption
+   - Secure connections
+   - Password hashing
+   - PII protection
+   - Backup security
+
+## Performance Optimization
+
+1. **Indexing**
+   - Primary keys
+   - Foreign keys
+   - Compound indexes
+   - Unique constraints
+   - Search optimization
+
+2. **Query Optimization**
+   - Efficient joins
+   - Proper filtering
+   - Pagination
+   - Eager loading
+   - Query analysis
+
+## Error Handling
+
+1. **Database Errors**
+   - Connection errors
+   - Constraint violations
+   - Timeout handling
+   - Deadlock handling
+   - Retry logic
+
+2. **Data Validation**
+   - Input validation
+   - Type checking
+   - Constraint checking
+   - Error messages
+   - Recovery strategies
+
+## Migrations
+
+1. **Version Control**
+   - Sequential migrations
+   - Rollback support
+   - Data preservation
+   - Schema validation
+   - Testing strategy
+
+2. **Deployment**
+   - Zero downtime
+   - Backup strategy
+   - Rollback plan
+   - Data verification
+   - Performance impact
+
+## Monitoring
+
+1. **Performance**
+   - Query times
+   - Connection pool
+   - Cache hits
+   - Lock contention
+   - Resource usage
+
+2. **Health Checks**
+   - Connection status
+   - Replication lag
+   - Backup status
+   - Storage usage
+   - Error rates

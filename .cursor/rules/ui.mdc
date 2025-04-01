@@ -1,0 +1,137 @@
+---
+description: UI, UX, components
+globs: 
+alwaysApply: false
+---
+# UI/UX Development Rules
+
+## Design System
+
+1. **Components**
+   - Use Shadcn UI components
+   - Follow atomic design principles
+   - Maintain consistent styling
+   - Implement proper animations
+   - Use proper typography
+
+2. **Theme**
+   - Dark mode by default
+   - Consistent color palette
+   - Proper contrast ratios
+   - CSS variables for theming
+   - Smooth theme transitions
+
+3. **Layout**
+   - Responsive design
+   - Mobile-first approach
+   - Proper spacing system
+   - Grid-based layouts
+   - Consistent margins/padding
+
+## Component Guidelines
+
+1. **Structure**
+   ```typescript
+   // Component structure
+   export function Component({ prop1, prop2 }: Props) {
+     // 1. Hooks
+     // 2. Derived state
+     // 3. Handlers
+     // 4. Effects
+     // 5. Render
+   }
+   ```
+
+2. **Props**
+   ```typescript
+   // Prop types
+   interface Props {
+     // Required props first
+     required: string;
+     // Optional props with defaults
+     optional?: string;
+     // Callback props with proper types
+     onEvent?: (data: EventData) => void;
+   }
+   ```
+
+3. **Styling**
+   ```typescript
+   // Tailwind classes
+   className={cn(
+     "base-styles",
+     "conditional-styles",
+     className
+   )}
+   ```
+
+## Accessibility
+
+1. **ARIA**
+   - Proper roles
+   - Descriptive labels
+   - Keyboard navigation
+   - Focus management
+   - Screen reader support
+
+2. **Interactions**
+   - Keyboard shortcuts
+   - Focus indicators
+   - Touch targets
+   - Loading states
+   - Error states
+
+3. **Content**
+   - Clear hierarchy
+   - Proper contrast
+   - Readable fonts
+   - Alt text
+   - Error messages
+
+## Performance
+
+1. **Loading**
+   - Skeleton screens
+   - Progressive loading
+   - Lazy components
+   - Suspense boundaries
+   - Loading indicators
+
+2. **Optimization**
+   - Image optimization
+   - Code splitting
+   - Bundle size
+   - Caching
+   - Preloading
+
+## Error Handling
+
+1. **UI States**
+   - Loading state
+   - Error state
+   - Empty state
+   - Success state
+   - Partial state
+
+2. **Messages**
+   - Clear errors
+   - Action feedback
+   - Success messages
+   - Warning states
+   - Help text
+
+## Forms
+
+1. **Validation**
+   - Real-time validation
+   - Error messages
+   - Field requirements
+   - Submit handling
+   - Loading states
+
+2. **UX**
+   - Clear labels
+   - Helper text
+   - Proper spacing
+   - Consistent styling
+   - Keyboard navigation

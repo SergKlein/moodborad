@@ -1,42 +1,49 @@
-import { stripe } from '../payments/stripe';
+// import { stripe } from '../payments/stripe';
 import { db } from './drizzle';
-import { users, teams, teamMembers } from './schema';
+import { users, teams, teamMembers, plans } from './schema';
 import { hashPassword } from '@/lib/auth/session';
+import { CyclePeriod } from '@/modules/credits/types';
 
-async function createStripeProducts() {
-  console.log('Creating Stripe products and prices...');
+async function createDefaultPlans() {
+  console.log('Creating default credit plans...');
 
-  const baseProduct = await stripe.products.create({
-    name: 'Base',
-    description: 'Base subscription plan',
-  });
-
-  await stripe.prices.create({
-    product: baseProduct.id,
-    unit_amount: 800, // $8 in cents
-    currency: 'usd',
-    recurring: {
-      interval: 'month',
-      trial_period_days: 7,
+  await db.insert(plans).values([
+    {
+      name: 'Basic',
+      description: 'Basic plan with limited credits',
+      creditsPerCycle: 100,
+      cyclePeriod: CyclePeriod.MONTHLY,
+      isActive: true,
+      features: JSON.stringify({
+        maxPromptLength: 1000,
+        supportPriority: 'standard'
+      })
     },
-  });
-
-  const plusProduct = await stripe.products.create({
-    name: 'Plus',
-    description: 'Plus subscription plan',
-  });
-
-  await stripe.prices.create({
-    product: plusProduct.id,
-    unit_amount: 1200, // $12 in cents
-    currency: 'usd',
-    recurring: {
-      interval: 'month',
-      trial_period_days: 7,
+    {
+      name: 'Pro',
+      description: 'Professional plan with more credits',
+      creditsPerCycle: 500,
+      cyclePeriod: CyclePeriod.MONTHLY,
+      isActive: true,
+      features: JSON.stringify({
+        maxPromptLength: 5000,
+        supportPriority: 'high'
+      })
     },
-  });
+    {
+      name: 'Enterprise',
+      description: 'Enterprise plan with unlimited credits',
+      creditsPerCycle: 2000,
+      cyclePeriod: CyclePeriod.MONTHLY,
+      isActive: true,
+      features: JSON.stringify({
+        maxPromptLength: 10000,
+        supportPriority: 'priority'
+      })
+    }
+  ]);
 
-  console.log('Stripe products and prices created successfully.');
+  console.log('Default credit plans created successfully.');
 }
 
 async function seed() {
@@ -70,7 +77,7 @@ async function seed() {
     role: 'owner',
   });
 
-  await createStripeProducts();
+  await createDefaultPlans();
 }
 
 seed()

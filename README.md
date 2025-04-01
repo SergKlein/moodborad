@@ -1,111 +1,178 @@
-# Next.js SaaS Starter
+# Moodboard - AI-Powered Interior Design Platform
 
-This is a starter template for building a SaaS application using **Next.js** with support for authentication, Stripe integration for payments, and a dashboard for logged-in users.
+![Moodboard Platform]
 
-**Demo: [https://next-saas-start.vercel.app/](https://next-saas-start.vercel.app/)**
+## Overview
+
+Moodboard is an innovative AI-driven platform that empowers architects, interior designers, and real estate professionals to effortlessly create stunning, visually cohesive moodboards. Simply input your concept or initial inspiration, and our AI will generate curated moodboards tailored specifically to your architectural style, interior preferences, or real estate marketing needs.
 
 ## Features
 
-- Marketing landing page (`/`) with animated Terminal element
-- Pricing page (`/pricing`) which connects to Stripe Checkout
-- Dashboard pages with CRUD operations on users/teams
-- Basic RBAC with Owner and Member roles
-- Subscription management with Stripe Customer Portal
-- Email/password authentication with JWTs stored to cookies
-- Global middleware to protect logged-in routes
-- Local middleware to protect Server Actions or validate Zod schemas
-- Activity logging system for any user events
+### Core Functionality
+
+* 🎨 **AI-Powered Generation**
+  * Create professional moodboards in seconds
+  * Multiple design variations per prompt
+  * Smart style and color matching
+
+* 🏗️ **Room Classification**
+  * 2-level taxonomy system
+  * Comprehensive room categorization
+  * Intelligent space organization
+
+* 📤 **Export & Share**
+  * Multiple export formats (PDF/PNG/JPEG)
+  * Image scaling capabilities
+  * Easy sharing options
+
+* 👥 **User Experience**
+  * Intuitive project wizard
+  * Real-time preview
+  * Comprehensive history tracking
+
+### Technical Features
+
+* ⚡ Fast page loads (< 2s)
+* 🎯 Quick generation (< 15s)
+* 🔒 Secure authentication
+* 📱 Responsive design
+* ♿ Accessibility support
 
 ## Tech Stack
 
-- **Framework**: [Next.js](https://nextjs.org/)
-- **Database**: [Postgres](https://www.postgresql.org/)
-- **ORM**: [Drizzle](https://orm.drizzle.team/)
-- **Payments**: [Stripe](https://stripe.com/)
-- **UI Library**: [shadcn/ui](https://ui.shadcn.com/)
+* **Frontend**
+  * Next.js 14 (App Router)
+  * Tailwind CSS + Shadcn UI
+  * Zustand for state management
+
+* **Backend**
+  * Next.js API Routes
+  * Node.js 20
+  * PostgreSQL (Neon)
+
+* **Infrastructure**
+  * Vercel Platform
+  * Vercel Blob Storage
+  * Vercel Edge Network
 
 ## Getting Started
 
+### Prerequisites
+
 ```bash
-git clone https://github.com/nextjs/saas-starter
-cd saas-starter
+node >= 20.0.0
+pnpm >= 8.0.0
+```
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/sergiiklein/moodboard.git
+cd moodboard
+```
+
+1. Install dependencies:
+
+```bash
 pnpm install
 ```
 
-## Running Locally
-
-Use the included setup script to create your `.env` file:
+1. Set up environment variables:
 
 ```bash
-pnpm db:setup
+cp .env.example .env.local
 ```
 
-Then, run the database migrations and seed the database with a default user and team:
-
-```bash
-pnpm db:migrate
-pnpm db:seed
-```
-
-This will create the following user and team:
-
-- User: `test@test.com`
-- Password: `admin123`
-
-You can, of course, create new users as well through `/sign-up`.
-
-Finally, run the Next.js development server:
+1. Run the development server:
 
 ```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to see the app in action.
+1. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Optionally, you can listen for Stripe webhooks locally through their CLI to handle subscription change events:
+### Environment Variables
 
 ```bash
-stripe listen --forward-to localhost:3000/api/stripe/webhook
+# App
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Database
+DATABASE_URL=your-neon-database-url
+
+# Authentication
+NEXTAUTH_SECRET=your-secret
+NEXTAUTH_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+# Storage
+BLOB_READ_WRITE_TOKEN=your-blob-token
+
+# AI Services
+REPLICATE_API_TOKEN=your-replicate-token
+OPENAI_API_KEY=your-openai-key
 ```
 
-## Testing Payments
+## Development
 
-To test Stripe payments, use the following test card details:
+### Project Structure
 
-- Card Number: `4242 4242 4242 4242`
-- Expiration: Any future date
-- CVC: Any 3-digit number
+```
+src/
+├── app/                 # Next.js app router
+├── components/         # React components
+├── lib/               # Utility functions
+├── styles/           # Global styles
+└── types/            # TypeScript types
+```
 
-## Going to Production
+### Key Commands
 
-When you're ready to deploy your SaaS application to production, follow these steps:
+```bash
+pnpm dev          # Start development server
+pnpm build        # Build for production
+pnpm start        # Start production server
+pnpm lint         # Run ESLint
+pnpm test         # Run tests
+pnpm type-check   # Run TypeScript checks
+```
 
-### Set up a production Stripe webhook
+### Database Management
 
-1. Go to the Stripe Dashboard and create a new webhook for your production environment.
-2. Set the endpoint URL to your production API route (e.g., `https://yourdomain.com/api/stripe/webhook`).
-3. Select the events you want to listen for (e.g., `checkout.session.completed`, `customer.subscription.updated`).
+```bash
+pnpm db:generate  # Generate Prisma client
+pnpm db:push     # Push schema changes
+pnpm db:studio   # Open Prisma Studio
+```
 
-### Deploy to Vercel
+## Documentation
 
-1. Push your code to a GitHub repository.
-2. Connect your repository to [Vercel](https://vercel.com/) and deploy it.
-3. Follow the Vercel deployment process, which will guide you through setting up your project.
+* [API Documentation](./docs/api.md)
+* [Database Schema](./docs/database.md)
+* [Architecture Overview](./docs/architecture.md)
+* [Development Guide](./docs/development.md)
 
-### Add environment variables
+## Contributing
 
-In your Vercel project settings (or during deployment), add all the necessary environment variables. Make sure to update the values for the production environment, including:
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-1. `BASE_URL`: Set this to your production domain.
-2. `STRIPE_SECRET_KEY`: Use your Stripe secret key for the production environment.
-3. `STRIPE_WEBHOOK_SECRET`: Use the webhook secret from the production webhook you created in step 1.
-4. `POSTGRES_URL`: Set this to your production database URL.
-5. `AUTH_SECRET`: Set this to a random string. `openssl rand -base64 32` will generate one.
+## License
 
-## Other Templates
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-While this template is intentionally minimal and to be used as a learning resource, there are other paid versions in the community which are more full-featured:
+## Support
 
-- https://achromatic.dev
-- https://shipfa.st
-- https://makerkit.dev
+For support, please check our [documentation](./docs) or contact the development team.
+
+## Roadmap
+
+See our [project roadmap](./docs/project.md) for planned features and improvements.
+
+_Last updated: 2024-03-27

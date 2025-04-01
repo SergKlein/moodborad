@@ -5,9 +5,15 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-if (!process.env.POSTGRES_URL) {
+const connectionString = process.env.POSTGRES_URL;
+
+if (!connectionString) {
   throw new Error('POSTGRES_URL environment variable is not set');
 }
 
-export const client = postgres(process.env.POSTGRES_URL);
-export const db = drizzle(client, { schema });
+// For migrations and queries that modify data
+export const migrationClient = postgres(connectionString, { max: 1 });
+
+// For regular queries
+export const queryClient = postgres(connectionString);
+export const db = drizzle(queryClient, { schema });

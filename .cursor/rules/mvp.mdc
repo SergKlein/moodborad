@@ -1,0 +1,172 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+ # MVP Development Rules
+
+## Core Principles
+
+1. **Test-Driven Development (TDD)**
+   - Write test first, then implementation
+   - Follow Red-Green-Refactor cycle strictly
+   - No implementation without corresponding tests
+   - Keep test coverage at 100% for core features
+
+2. **Atomic Feature Development**
+   - Focus on one feature at a time
+   - Complete feature = fully tested + documented + reviewed
+   - No parallel feature development
+   - Each feature should be independently deployable
+
+3. **Definition of "Complete"**
+   - All tests passing (unit, integration, E2E)
+   - Documentation updated
+   - Code reviewed
+   - Feature deployed to staging
+   - Manual QA verification
+   - Performance metrics within acceptable range
+
+## Development Flow
+
+1. **Feature Planning**
+   ```
+   Feature -> User Story -> Test Cases -> Implementation -> Review -> Deploy
+   ```
+   - Break down feature into smallest possible units
+   - Define clear acceptance criteria
+   - Create test cases before coding
+   - Implement only what's needed for tests to pass
+
+2. **MVP Feature Priority**
+   1. User Authentication (Core)
+      - Email/password sign in only
+      - Session management
+      - Basic user profile
+      
+   2. Project Management
+      - Create project
+      - Basic project settings
+      - Project deletion
+      
+   3. Board Management
+      - Create board
+      - Add items to board
+      - Basic drag-and-drop
+      
+   4. Image Management
+      - Image upload
+      - Basic image optimization
+      - Image deletion
+      
+   5. Basic Collaboration
+      - Share board (read-only)
+      - Basic user permissions
+
+## Implementation Rules
+
+1. **Single Responsibility**
+   - Each component/module does one thing
+   - Each test suite focuses on one feature
+   - Each PR implements one feature
+   - Each commit represents one logical change
+
+2. **Testing Requirements**
+   ```typescript
+   // Example test structure
+   describe('Feature: User Authentication', () => {
+     describe('Unit: Sign In', () => {
+       it('should validate email format')
+       it('should validate password requirements')
+       it('should handle invalid credentials')
+       it('should create user session')
+     })
+     
+     describe('Integration: Auth Flow', () => {
+       it('should complete sign in process')
+       it('should maintain session')
+       it('should handle sign out')
+     })
+     
+     describe('E2E: User Journey', () => {
+       it('should complete full auth cycle')
+     })
+   })
+   ```
+
+3. **Code Organization**
+   - Feature-based directory structure
+   - Separate test files for each feature
+   - Clear separation of concerns
+   - Minimal dependencies between features
+
+## Development Process
+
+1. **Start New Feature**
+   - Create feature branch
+   - Write failing tests
+   - Document expected behavior
+   - Create minimal implementation
+
+2. **Implementation Phase**
+   - Write only code needed to pass tests
+   - No premature optimization
+   - Keep methods small (max 20 lines)
+   - Regular commits with clear messages
+
+3. **Review Phase**
+   - Self-review checklist
+   - Peer code review
+   - Test coverage verification
+   - Performance check
+   - Security review
+
+4. **Completion Phase**
+   - Documentation update
+   - Merge to development
+   - Deploy to staging
+   - Verify in production-like environment
+
+## Quality Gates
+
+1. **Code Quality**
+   - 100% test coverage for core features
+   - No TypeScript errors/warnings
+   - ESLint rules passing
+   - Prettier formatting
+   - SonarQube quality gates
+
+2. **Performance**
+   - Page load < 3s
+   - Time to Interactive < 5s
+   - Bundle size limits
+   - API response time < 500ms
+
+3. **Security**
+   - No high/critical vulnerabilities
+   - OWASP top 10 compliance
+   - Secure authentication
+   - Data encryption
+
+## Documentation Requirements
+
+1. **Code Documentation**
+   - JSDoc for public APIs
+   - README for each feature
+   - Clear commit messages
+   - Inline comments for complex logic
+
+2. **Test Documentation**
+   - Test case description
+   - Edge cases covered
+   - Performance benchmarks
+   - Security considerations
+
+## Remember
+
+- Quality over speed
+- No shortcuts in testing
+- Complete one thing before starting another
+- If unsure, ask for review
+- Document decisions and trade-offs
+- Keep it simple

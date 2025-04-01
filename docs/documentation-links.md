@@ -1,0 +1,110 @@
+# Documentation Links
+
+## Core Technologies
+
+### Next.js
+- [Next.js Documentation](https://nextjs.org/docs) - Main documentation
+- [Next.js App Router](https://nextjs.org/docs/app) - New App Router documentation
+- [Next.js API Routes](https://nextjs.org/docs/app/building-your-application/routing/route-handlers) - API Routes documentation
+- [Next.js Authentication](https://nextjs.org/docs/app/building-your-application/authentication) - Authentication patterns
+- [Next.js Deployment](https://nextjs.org/docs/app/building-your-application/deploying) - Deployment guide
+
+### React
+- [React Documentation](https://react.dev/) - Official React documentation
+- [React Hooks](https://react.dev/reference/react/hooks) - Built-in Hooks
+- [React Server Components](https://react.dev/blog/2023/03/22/react-labs-what-we-have-been-working-on-march-2023#react-server-components) - RSC documentation
+
+### TypeScript
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/) - Official documentation
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html) - TypeScript guide
+- [TypeScript with React](https://www.typescriptlang.org/docs/handbook/react.html) - TypeScript in React
+
+## UI and Styling
+
+### Tailwind CSS
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs) - Main documentation
+- [Tailwind CSS Installation](https://tailwindcss.com/docs/installation) - Setup guide
+- [Tailwind CSS with Next.js](https://tailwindcss.com/docs/guides/nextjs) - Next.js integration
+- [Tailwind CSS Dark Mode](https://tailwindcss.com/docs/dark-mode) - Dark mode implementation
+
+### Shadcn/ui
+- [Shadcn/ui Documentation](https://ui.shadcn.com/docs) - Main documentation
+- [Shadcn/ui Components](https://ui.shadcn.com/docs/components) - Component library
+- [Shadcn/ui Installation](https://ui.shadcn.com/docs/installation) - Setup guide
+- [Shadcn/ui Themes](https://ui.shadcn.com/docs/theming) - Theming guide
+
+### Radix UI
+- [Radix UI Documentation](https://www.radix-ui.com/docs/primitives) - Main documentation
+- [Radix UI Components](https://www.radix-ui.com/primitives) - Component primitives
+- [Radix UI Styling](https://www.radix-ui.com/docs/primitives/guides/styling) - Styling guide
+
+## Database and Backend
+
+### Supabase
+- [Supabase Documentation](https://supabase.com/docs) - Main documentation
+- [Supabase with Next.js](https://supabase.com/docs/guides/getting-started/quickstarts/nextjs) - Next.js integration
+- [Supabase Auth](https://supabase.com/docs/guides/auth) - Authentication
+- [Supabase Database](https://supabase.com/docs/guides/database) - Database guide
+
+### PostgreSQL
+- [PostgreSQL Documentation](https://www.postgresql.org/docs/) - Official documentation
+- [PostgreSQL Tutorial](https://www.postgresql.org/docs/current/tutorial.html) - Getting started
+
+## Testing
+
+### Vitest
+- [Vitest Documentation](https://vitest.dev/guide/) - Main documentation
+- [Vitest with React](https://vitest.dev/guide/testing-types.html) - React testing
+- [Vitest Configuration](https://vitest.dev/config/) - Configuration guide
+
+### Testing Library
+- [Testing Library Documentation](https://testing-library.com/docs/) - Main documentation
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) - React testing
+- [User Event](https://testing-library.com/docs/user-event/intro/) - User interactions
+
+### Playwright
+- [Playwright Documentation](https://playwright.dev/docs/intro) - Main documentation
+- [Playwright Test](https://playwright.dev/docs/test-intro) - Testing guide
+- [Playwright API](https://playwright.dev/docs/api/class-playwright) - API reference
+
+## Development Tools
+
+### ESLint
+- [ESLint Documentation](https://eslint.org/docs/latest/) - Main documentation
+- [ESLint Rules](https://eslint.org/docs/latest/rules/) - Rules reference
+- [TypeScript ESLint](https://typescript-eslint.io/docs/) - TypeScript integration
+
+### Prettier
+- [Prettier Documentation](https://prettier.io/docs/en/) - Main documentation
+- [Prettier Options](https://prettier.io/docs/en/options.html) - Configuration
+- [Prettier Integration](https://prettier.io/docs/en/integrating-with-linters.html) - Linter integration
+
+## Deployment and Hosting
+
+### Vercel
+- [Vercel Documentation](https://vercel.com/docs) - Main documentation
+- [Vercel CLI](https://vercel.com/docs/cli) - Command line interface
+- [Vercel Edge Functions](https://vercel.com/docs/functions/edge-functions) - Edge computing
+- [Vercel Analytics](https://vercel.com/docs/analytics) - Analytics and monitoring
+
+### Neon
+- [Neon Documentation](https://neon.tech/docs/introduction) - Main documentation
+- [Neon with Prisma](https://neon.tech/docs/guides/prisma) - Prisma integration
+- [Neon Branching](https://neon.tech/docs/introduction/branching) - Database branching
+
+## Additional Resources
+
+### Accessibility
+- [WCAG Guidelines](https://www.w3.org/WAI/standards-guidelines/wcag/) - Web accessibility guidelines
+- [WAI-ARIA](https://www.w3.org/WAI/ARIA/apg/) - ARIA practices
+- [A11y Project](https://www.a11yproject.com/) - Accessibility resources
+
+### Performance
+- [Web Vitals](https://web.dev/vitals/) - Core Web Vitals
+- [Lighthouse](https://developers.google.com/web/tools/lighthouse) - Performance auditing
+- [Next.js Performance](https://nextjs.org/docs/app/building-your-application/optimizing) - Optimization guide
+
+### Security
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/) - Security risks
+- [Next.js Security](https://nextjs.org/docs/app/building-your-application/security) - Security best practices
+- [Web Security](https://web.dev/security/) - Web security guide 

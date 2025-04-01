@@ -1,0 +1,97 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+ # Authentication Rules
+
+## Core Authentication Principles
+
+1. **Security First**
+   - Always validate user input
+   - Implement proper rate limiting
+   - Use secure session management
+   - Follow OAuth 2.0 best practices
+   - Implement proper password hashing
+
+2. **User Experience**
+   - Clear error messages
+   - Smooth authentication flows
+   - Proper loading states
+   - Remember user preferences
+   - Easy social login integration
+
+## Implementation Guidelines
+
+1. **NextAuth.js Setup**
+   ```typescript
+   - Use JWT strategy for sessions
+   - Implement custom callbacks
+   - Add proper error handling
+   - Use secure session cookies
+   - Implement proper providers
+   ```
+
+2. **Password Management**
+   ```typescript
+   - Use bcrypt for hashing
+   - Implement password policies
+   - Add password reset flow
+   - Secure token generation
+   - Proper error handling
+   ```
+
+3. **Session Management**
+   ```typescript
+   - Secure session storage
+   - Proper session expiry
+   - Session invalidation
+   - Remember me functionality
+   - Cross-tab synchronization
+   ```
+
+## Security Measures
+
+1. **Rate Limiting**
+   - Implement per-IP limits
+   - Add user-based limits
+   - Use sliding windows
+   - Handle rate limit errors
+   - Add proper headers
+
+2. **Input Validation**
+   - Validate email format
+   - Check password strength
+   - Sanitize user input
+   - Validate tokens
+   - Check session validity
+
+3. **Error Handling**
+   - User-friendly messages
+   - Proper error logging
+   - Security audit logs
+   - Failed attempt tracking
+   - Suspicious activity detection
+
+## Authentication Flows
+
+1. **Email Authentication**
+   - Proper email validation
+   - Secure magic links
+   - Email verification
+   - Password reset flow
+   - Account recovery
+
+2. **Social Authentication**
+   - Google integration
+   - Profile syncing
+   - Account linking
+   - Error handling
+   - Data persistence
+
+3. **Session Management**
+   - Secure storage
+   - Proper expiry
+   - Refresh tokens
+   - Multiple devices
+   - Logout handling

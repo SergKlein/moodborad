@@ -23,58 +23,9 @@ function question(query: string): Promise<string> {
 }
 
 async function checkStripeCLI() {
-  console.log(
-    'Step 1: Checking if Stripe CLI is installed and authenticated...'
-  );
-  try {
-    await execAsync('stripe --version');
-    console.log('Stripe CLI is installed.');
-
-    // Check if Stripe CLI is authenticated
-    try {
-      await execAsync('stripe config --list');
-      console.log('Stripe CLI is authenticated.');
-    } catch (error) {
-      console.log(
-        'Stripe CLI is not authenticated or the authentication has expired.'
-      );
-      console.log('Please run: stripe login');
-      const answer = await question(
-        'Have you completed the authentication? (y/n): '
-      );
-      if (answer.toLowerCase() !== 'y') {
-        console.log(
-          'Please authenticate with Stripe CLI and run this script again.'
-        );
-        process.exit(1);
-      }
-
-      // Verify authentication after user confirms login
-      try {
-        await execAsync('stripe config --list');
-        console.log('Stripe CLI authentication confirmed.');
-      } catch (error) {
-        console.error(
-          'Failed to verify Stripe CLI authentication. Please try again.'
-        );
-        process.exit(1);
-      }
-    }
-  } catch (error) {
-    console.error(
-      'Stripe CLI is not installed. Please install it and try again.'
-    );
-    console.log('To install Stripe CLI, follow these steps:');
-    console.log('1. Visit: https://docs.stripe.com/stripe-cli');
-    console.log(
-      '2. Download and install the Stripe CLI for your operating system'
-    );
-    console.log('3. After installation, run: stripe login');
-    console.log(
-      'After installation and authentication, please run this setup script again.'
-    );
-    process.exit(1);
-  }
+  console.log('Step 1: Stripe integration has been replaced with internal credit system');
+  // Skip actual Stripe CLI check
+  return true;
 }
 
 async function getPostgresURL(): Promise<string> {
@@ -148,34 +99,15 @@ volumes:
 }
 
 async function getStripeSecretKey(): Promise<string> {
-  console.log('Step 3: Getting Stripe Secret Key');
-  console.log(
-    'You can find your Stripe Secret Key at: https://dashboard.stripe.com/test/apikeys'
-  );
-  return await question('Enter your Stripe Secret Key: ');
+  console.log('Step 3: Stripe integration replaced with internal credit system');
+  console.log('No Stripe secret key needed.');
+  return '';
 }
 
 async function createStripeWebhook(): Promise<string> {
-  console.log('Step 4: Creating Stripe webhook...');
-  try {
-    const { stdout } = await execAsync('stripe listen --print-secret');
-    const match = stdout.match(/whsec_[a-zA-Z0-9]+/);
-    if (!match) {
-      throw new Error('Failed to extract Stripe webhook secret');
-    }
-    console.log('Stripe webhook created.');
-    return match[0];
-  } catch (error) {
-    console.error(
-      'Failed to create Stripe webhook. Check your Stripe CLI installation and permissions.'
-    );
-    if (os.platform() === 'win32') {
-      console.log(
-        'Note: On Windows, you may need to run this script as an administrator.'
-      );
-    }
-    throw error;
-  }
+  console.log('Step 4: Stripe webhooks replaced with internal credit system');
+  console.log('No webhook secret needed.');
+  return 'internal_credit_system_no_webhook_needed';
 }
 
 function generateAuthSecret(): string {
@@ -194,11 +126,13 @@ async function writeEnvFile(envVars: Record<string, string>) {
 }
 
 async function main() {
-  await checkStripeCLI();
+  let STRIPE_SECRET_KEY: string = '';
+  let STRIPE_WEBHOOK_SECRET: string = '';
+
+  // Skip Stripe setup
+  console.log('Skipping Stripe setup as we are using internal credit system.');
 
   const POSTGRES_URL = await getPostgresURL();
-  const STRIPE_SECRET_KEY = await getStripeSecretKey();
-  const STRIPE_WEBHOOK_SECRET = await createStripeWebhook();
   const BASE_URL = 'http://localhost:3000';
   const AUTH_SECRET = generateAuthSecret();
 
@@ -211,6 +145,7 @@ async function main() {
   });
 
   console.log('🎉 Setup completed successfully!');
+  console.log('Note: Stripe integration has been replaced with an internal credit system.');
 }
 
 main().catch(console.error);

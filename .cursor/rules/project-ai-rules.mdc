@@ -1,0 +1,187 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Development Rules for Error Prevention
+
+These rules aim to help prevent common errors and issues based on past development experience. Following these guidelines will lead to more robust and maintainable code.
+
+## Dependency Migration and API Changes
+
+1. **Gradual Removal of External Dependencies**
+   - Create a comprehensive map of all dependency usage before removal
+   - Maintain data structures for backward compatibility
+   - Check all imports and references to the dependency
+   - Create tests to ensure functionality is preserved after migration
+
+2. **API Replacement Strategy**
+   - Create intermediate layers to preserve API signatures
+   - Keep corresponding fields in the database for backward compatibility
+   - Implement data migration as separate scripts
+   - Document changes in API behavior for other developers
+
+## Next.js Server Actions
+
+1. **Server Action Structure**
+   - Always declare server actions in separate files with 'use server' directive
+   - Server actions should accept only FormData as their single argument
+   - Pass additional data through hidden form fields instead of using bind()
+   - Handle all error cases explicitly and return appropriate responses
+
+2. **Form Handling Best Practices**
+   - Use explicit types for form data
+   - Document all hidden fields and their purpose
+   - Handle validation errors on the server side
+   - Provide clear feedback for form submission results
+
+## Project Structure and Imports
+
+1. **Absolute Import Usage**
+   - Always use '@/' for imports from the project root
+   - Group components by functionality into modules
+   - Create index files for module API exports
+   - Avoid deep nesting of import paths
+
+2. **Module Organization**
+   - Each module should have types.ts, components/, utils.ts, and service.ts
+   - All public module API should be exported through index.ts
+   - Avoid circular dependencies between modules
+   - Clearly separate concerns within each module
+
+## Database Management
+
+1. **Schema Updates**
+   - Create migrations for any schema changes
+   - Use incremental updates for complex changes
+   - Add new fields before removing old ones
+   - Test migrations on development environments first
+
+2. **Data Migration**
+   - Create separate scripts for data migration
+   - Test migration on data copies before applying to production
+   - Create rollback plans for critical migrations
+   - Log all migration activities for debugging
+
+## Error Handling
+
+1. **Type Error Prevention**
+   - Check for possible null and undefined values for all fields
+   - Use guard clauses for optional fields
+   - Document all assumptions about data structures
+   - Use TypeScript effectively to catch type errors early
+
+2. **Comprehensive Testing**
+   - Test new features for interaction with existing code
+   - Check behavior when data is missing
+   - Use typical user scenarios for testing
+   - Create edge case tests for unusual situations
+
+## Components and Rendering
+
+1. **Component Contract Adherence**
+   - Clearly define props with explicit TypeScript types
+   - Properly handle loading and error states
+   - Monitor compatibility between server and client components
+   - Use prop destructuring with default values
+
+2. **Rendering Strategy**
+   - Use server components by default
+   - Explicitly mark client components with 'use client' directive
+   - Minimize state on the client side
+   - Implement proper loading indicators and error boundaries
+
+## API Development
+
+1. **API Design**
+   - Follow RESTful principles for endpoint design
+   - Implement consistent response formats
+   - Use proper HTTP status codes
+   - Document all API endpoints
+
+2. **API Security**
+   - Validate all user inputs
+   - Implement proper authentication and authorization
+   - Use rate limiting for public endpoints
+   - Sanitize data before returning responses
+
+## Performance Optimization
+
+1. **Frontend Performance**
+   - Implement code splitting for better initial load times
+   - Optimize images and assets
+   - Use proper caching strategies
+   - Monitor bundle sizes
+
+2. **Backend Performance**
+   - Use database indexes for frequently queried fields
+   - Implement caching for expensive operations
+   - Optimize database queries
+   - Use pagination for large data sets
+
+## State Management
+
+1. **Client State**
+   - Keep client state minimal and focused
+   - Use appropriate state management based on complexity
+   - Implement proper loading and error states
+   - Document state transitions
+
+2. **Server State**
+   - Use React Query or SWR for server state management
+   - Implement proper caching strategies
+   - Handle stale data appropriately
+   - Document data fetching patterns
+
+## Project-Specific Code Style and Principles
+
+1. **Module Structure**
+   - Organize features into self-contained modules under `/modules` directory
+   - Each module should follow a consistent structure with types, components, services, and utilities
+   - Use barrel exports (index.ts) to expose the public API of each module
+   - Keep implementation details private within the module
+
+2. **Documentation Style**
+   - Document all functions, interfaces, and complex logic with JSDoc comments
+   - Use descriptive comments for complex business logic
+   - Document enum values and their meaning
+   - Document assumptions and edge cases
+
+3. **Function Design**
+   - Create single-purpose, focused functions
+   - Use descriptive function names that indicate action and subject
+   - Return explicit types for all functions
+   - Implement early returns for error conditions
+   - Keep functions under 50 lines when possible
+
+4. **Error Handling Patterns**
+   - Return structured result objects for operations that can fail
+   - Include success/failure flags in return types
+   - Provide meaningful error messages and status codes
+   - Handle all edge cases explicitly
+
+5. **Type System Usage**
+   - Create explicit interfaces for all data structures
+   - Use enums for predefined values and status codes
+   - Define input and output types for all API functions
+   - Use pick and omit types for derived data structures
+
+6. **Database Interaction**
+   - Use query builders instead of raw SQL
+   - Create separate functions for each database operation
+   - Handle null checks for database results
+   - Log significant database operations
+
+7. **Naming Conventions**
+   - Use PascalCase for interfaces, types, and enums
+   - Use camelCase for variables, functions, and properties
+   - Use descriptive variable names that indicate purpose
+   - Prefix boolean variables with 'is', 'has', or similar
+   - Use consistent naming patterns for similar functions
+
+8. **Component Architecture**
+   - Create small, focused components with clear responsibilities
+   - Pass explicit props instead of large objects
+   - Use proper TypeScript typing for component props
+   - Implement proper loading and error states
+

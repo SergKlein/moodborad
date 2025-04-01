@@ -1,0 +1,200 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+1. Project Structure
+	•	Follow the Model-View-Controller (MVC) architectural pattern to organize code effectively.
+	•	Separate application components into appropriate directories:
+	•	models/ — Define data schemas and handle database interactions.
+	•	controllers/ — Manage incoming requests and encapsulate business logic.
+	•	routes/ — Define API endpoints and map them to corresponding controllers.
+	•	middlewares/ — Implement request processing logic such as authentication and logging.
+	•	services/ — Contain auxiliary functions and business logic not directly tied to controllers.
+
+2. Coding Style
+	•	Maintain a consistent coding style throughout the project.
+	•	Utilize linters and formatters to automatically enforce code style standards.
+	•	Write clear and concise comments for complex code sections to enhance readability.
+
+3. Error Handling
+	•	Implement centralized error handling to ensure consistent API responses.
+	•	Use appropriate HTTP status codes to indicate operation outcomes:
+	•	200 OK — Successful request.
+	•	201 Created — Resource successfully created.
+	•	400 Bad Request — Client-side input error.
+	•	401 Unauthorized — Authentication required.
+	•	403 Forbidden — Insufficient permissions.
+	•	404 Not Found — Resource not found.
+	•	500 Internal Server Error — Server-side error.
+	•	Provide informative error messages detailing the cause and potential solutions.
+
+4. Data Validation
+	•	Validate incoming data against expected formats and types before processing.
+	•	Employ schema validation libraries, such as Joi or Zod, to streamline data validation processes.
+
+5. Security
+	•	Implement authentication and authorization mechanisms to protect API resources.
+	•	Apply CSRF protection and configure CORS policies as needed, especially for browser-based clients.
+	•	Regularly update dependencies and monitor for known vulnerabilities using tools like npm audit.
+
+6. Documentation
+	•	Maintain up-to-date documentation for each API endpoint.
+	•	Utilize tools like Swagger or OpenAPI to automatically generate and visualize API documentation.
+
+7. Testing
+	•	Cover code with unit and integration tests to ensure API functionality.
+	•	Use testing frameworks, such as Jest or Mocha, for writing and executing tests.
+	•	Aim for high test coverage, focusing on critical application components.
+
+8. Logging and Monitoring
+	•	Implement logging for incoming requests and errors to facilitate debugging and monitoring.
+	•	Integrate monitoring systems, such as Prometheus or New Relic, to track API health and performance.
+
+9. Performance
+	•	Optimize database queries by utilizing indexes and efficient data structures.
+	•	Implement caching strategies at the server or client level to reduce load and improve response times.
+
+10. API Versioning
+	•	Implement API versioning to maintain backward compatibility during updates.
+	•	Specify version information explicitly in URLs (e.g., /api/v1/resource) or through request headers.
+
+	# API Development Rules
+
+## Core API Principles
+
+1. **Design**
+   - RESTful principles
+   - Clear naming conventions
+   - Proper HTTP methods
+   - Consistent responses
+   - Proper status codes
+
+2. **Security**
+   - Input validation
+   - Rate limiting
+   - Authentication
+   - Authorization
+   - CORS policies
+
+## Implementation Guidelines
+
+1. **Route Handlers**
+   ```typescript
+   // Route structure
+   export async function POST(req: Request) {
+     try {
+       // 1. Validate input
+       // 2. Check authentication
+       // 3. Process request
+       // 4. Return response
+     } catch (error) {
+       // Handle errors
+     }
+   }
+   ```
+
+2. **Response Format**
+   ```typescript
+   // Success response
+   {
+     success: true,
+     data: T,
+     message?: string
+   }
+
+   // Error response
+   {
+     success: false,
+     error: {
+       code: string,
+       message: string,
+       details?: any
+     }
+   }
+   ```
+
+3. **Validation**
+   ```typescript
+   // Zod schema
+   const schema = z.object({
+     required: z.string(),
+     optional: z.number().optional(),
+     nested: z.object({...})
+   });
+   ```
+
+## Error Handling
+
+1. **HTTP Status Codes**
+   - 200: Success
+   - 201: Created
+   - 400: Bad Request
+   - 401: Unauthorized
+   - 403: Forbidden
+   - 404: Not Found
+   - 429: Too Many Requests
+   - 500: Server Error
+
+2. **Error Types**
+   ```typescript
+   class APIError extends Error {
+     constructor(
+       message: string,
+       public statusCode: number,
+       public code: string
+     ) {
+       super(message);
+     }
+   }
+   ```
+
+## Performance
+
+1. **Optimization**
+   - Query optimization
+   - Response caching
+   - Proper indexing
+   - Connection pooling
+   - Request batching
+
+2. **Monitoring**
+   - Response times
+   - Error rates
+   - Request volume
+   - Cache hits
+   - Resource usage
+
+## Security Measures
+
+1. **Authentication**
+   - JWT validation
+   - Session handling
+   - Token refresh
+   - Secure cookies
+   - CSRF protection
+
+2. **Authorization**
+   - Role-based access
+   - Resource ownership
+   - Permission checks
+   - Audit logging
+   - Rate limiting
+
+## Documentation
+
+1. **API Docs**
+   - OpenAPI/Swagger
+   - Request/response examples
+   - Error descriptions
+   - Authentication details
+   - Rate limit info
+
+2. **Code Comments**
+   - Function purpose
+   - Parameter types
+   - Return values
+   - Error conditions
+   - Usage examples
+
+
