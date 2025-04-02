@@ -14,7 +14,8 @@
     "credits:init": "dotenv -e .env.development -- tsx scripts/init-plans.ts",
     "credits:migrate": "dotenv -e .env.development -- tsx scripts/migrate-stripe-to-plans.ts",
     "test:connections": "dotenv -e .env.test -- vitest run tests/integration/connections.test.ts",
-    "test:connections:watch": "dotenv -e .env.test -- vitest watch tests/integration/connections.test.ts"
+    "test:connections:watch": "dotenv -e .env.test -- vitest watch tests/integration/connections.test.ts",
+    "browser-tools": "npx @agentdeskai/browser-tools-server@1.2.0"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.3",
