@@ -7,18 +7,23 @@ import {
   integer,
   boolean,
   json,
+  pgEnum,
+  unique,
 } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 
+export const projectVisibilityEnum = pgEnum('project_visibility', ['private', 'public']);
+export const projectStatusEnum = pgEnum('project_status', ['active', 'archived']);
+export const collaboratorRoleEnum = pgEnum('collaborator_role', ['viewer', 'editor', 'admin']);
+export const taxonomyTypeEnum = pgEnum('taxonomy_type', ['room', 'space', 'idea', 'design', 'color', 'style', 'general']);
+
 export const users = pgTable('users', {
   id: serial('id').primaryKey(),
-  name: varchar('name', { length: 100 }),
+  name: text('name'),
   email: varchar('email', { length: 255 }).notNull().unique(),
-  passwordHash: text('password_hash').notNull(),
-  role: varchar('role', { length: 20 }).notNull().default('member'),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-  deletedAt: timestamp('deleted_at'),
+  image: text('image'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
 export const teams = pgTable('teams', {
@@ -111,6 +116,113 @@ export const creditUsage = pgTable('credit_usage', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
+export const projects = pgTable('projects', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+  description: text('description'),
+  visibility: projectVisibilityEnum('visibility').default('private').notNull(),
+  designStyle: text('design_style'),
+  colorPreferences: text('color_preferences'),
+  budget: text('budget'),
+  timeline: text('timeline'),
+  notes: text('notes'),
+  status: projectStatusEnum('status').default('active').notNull(),
+  visibleToCollaboratorsWhenArchived: boolean('visible_to_collaborators_when_archived').default(false).notNull(),
+  userId: serial('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const rooms = pgTable('rooms', {
+  id: serial('id').primaryKey(),
+  projectId: serial('project_id').references(() => projects.id, { onDelete: 'cascade' }).notNull(),
+  name: varchar('name').notNull(),
+  description: text('description'),
+  type: varchar('type'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const spaces = pgTable('spaces', {
+  id: serial('id').primaryKey(),
+  projectId: serial('project_id').references(() => projects.id, { onDelete: 'cascade' }).notNull(),
+  roomId: serial('room_id').references(() => rooms.id, { onDelete: 'cascade' }).notNull(),
+  name: varchar('name').notNull(),
+  description: text('description'),
+  type: varchar('type'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const spaceItems = pgTable('space_items', {
+  id: serial('id').primaryKey(),
+  spaceId: serial('space_id').references(() => spaces.id, { onDelete: 'cascade' }).notNull(),
+  type: varchar('type').notNull(),
+  content: jsonb('content'),
+  position: jsonb('position'),
+  size: jsonb('size'),
+  style: jsonb('style'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const projectCollaborators = pgTable('project_collaborators', {
+  id: serial('id').primaryKey(),
+  role: collaboratorRoleEnum('role').default('viewer').notNull(),
+  projectId: serial('project_id').references(() => projects.id, { onDelete: 'cascade' }).notNull(),
+  userId: serial('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const taxonomies = pgTable('taxonomies', {
+  id: serial('id').primaryKey(),
+  type: taxonomyTypeEnum('type').notNull(),
+  name: text('name').notNull(),
+  slug: text('slug').notNull(),
+  description: text('description'),
+  icon: text('icon'),
+  color: text('color'),
+  parentId: integer('parent_id').references(() => taxonomies.id),
+  order: integer('order').default(0),
+  metadata: text('metadata'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const taxonomiesTypeSlugIndex = unique('taxonomies_type_slug_idx').on(taxonomies.type, taxonomies.slug);
+
+export const taxonomiesRelations = relations(taxonomies, ({ one, many }) => ({
+  parent: one(taxonomies, {
+    fields: [taxonomies.parentId],
+    references: [taxonomies.id],
+  }),
+  children: many(taxonomies),
+}));
+
+export const projectTaxonomies = pgTable('project_taxonomies', {
+  id: serial('id').primaryKey(),
+  projectId: serial('project_id').references(() => projects.id, { onDelete: 'cascade' }).notNull(),
+  taxonomyId: serial('taxonomy_id').references(() => taxonomies.id, { onDelete: 'cascade' }).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const projectTaxonomiesIndex = unique('project_taxonomies_idx').on(projectTaxonomies.projectId, projectTaxonomies.taxonomyId);
+
+export const projectTaxonomiesRelations = relations(projectTaxonomies, ({ one }) => ({
+  project: one(projects, {
+    fields: [projectTaxonomies.projectId],
+    references: [projects.id],
+  }),
+  taxonomy: one(taxonomies, {
+    fields: [projectTaxonomies.taxonomyId],
+    references: [taxonomies.id],
+  }),
+}));
+
+export const projectsRelationsWithTaxonomy = relations(projects, ({ many }) => ({
+  taxonomies: many(projectTaxonomies),
+}));
+
 export const teamsRelations = relations(teams, ({ many }) => ({
   teamMembers: many(teamMembers),
   activityLogs: many(activityLogs),
@@ -123,6 +235,8 @@ export const usersRelations = relations(users, ({ many }) => ({
   teamMembers: many(teamMembers),
   invitationsSent: many(invitations),
   creditUsage: many(creditUsage),
+  projects: many(projects),
+  collaborations: many(projectCollaborators),
 }));
 
 export const invitationsRelations = relations(invitations, ({ one }) => ({
@@ -176,8 +290,56 @@ export const creditUsageRelations = relations(creditUsage, ({ one }) => ({
   }),
 }));
 
-export const plansRelations = relations(plans, ({ many }) => ({
-  // Relations can be added when we implement assignment of plans to teams
+export const projectRelations = relations(projects, ({ many }) => ({
+  rooms: many(rooms),
+  spaces: many(spaces),
+  taxonomies: many(projectTaxonomies),
+}));
+
+export const roomRelations = relations(rooms, ({ one, many }) => ({
+  project: one(projects, {
+    fields: [rooms.projectId],
+    references: [projects.id],
+  }),
+  spaces: many(spaces),
+}));
+
+export const spaceRelations = relations(spaces, ({ one, many }) => ({
+  project: one(projects, {
+    fields: [spaces.projectId],
+    references: [projects.id],
+  }),
+  room: one(rooms, {
+    fields: [spaces.roomId],
+    references: [rooms.id],
+  }),
+  items: many(spaceItems),
+}));
+
+export const spaceItemRelations = relations(spaceItems, ({ one }) => ({
+  space: one(spaces, {
+    fields: [spaceItems.spaceId],
+    references: [spaces.id],
+  }),
+}));
+
+export const projectCollaboratorsRelations = relations(projectCollaborators, ({ one }) => ({
+  project: one(projects, {
+    fields: [projectCollaborators.projectId],
+    references: [projects.id],
+  }),
+  user: one(users, {
+    fields: [projectCollaborators.userId],
+    references: [users.id],
+  }),
+}));
+
+export const boardsRelations = relations(spaces, ({ one, many }) => ({
+  project: one(projects, {
+    fields: [spaces.projectId],
+    references: [projects.id],
+  }),
+  items: many(spaceItems),
 }));
 
 export type User = typeof users.$inferSelect;

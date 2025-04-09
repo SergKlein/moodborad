@@ -3,7 +3,6 @@
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { customerPortalAction } from '@/lib/payments/actions';
 import { useActionState } from 'react';
 import { TeamDataWithMembers, User } from '@/lib/db/schema';
 import { removeTeamMember } from '@/app/(login)/actions';
@@ -27,7 +26,7 @@ export function Settings({ teamData }: { teamData: TeamDataWithMembers }) {
   return (
     <section className="flex-1 p-4 lg:p-8">
       <h1 className="text-lg lg:text-2xl font-medium mb-6">Team Settings</h1>
-      <Card className="mb-8">
+      {/*<Card className="mb-8">
         <CardHeader>
           <CardTitle>Team Subscription</CardTitle>
         </CardHeader>
@@ -54,7 +53,7 @@ export function Settings({ teamData }: { teamData: TeamDataWithMembers }) {
             </div>
           </div>
         </CardContent>
-      </Card>
+      </Card>*/}
       <Card className="mb-8">
         <CardHeader>
           <CardTitle>Team Members</CardTitle>

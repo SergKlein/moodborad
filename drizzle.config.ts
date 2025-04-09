@@ -5,6 +5,9 @@ export default {
   out: './lib/db/migrations',
   dialect: 'postgresql',
   dbCredentials: {
-    url: process.env.POSTGRES_URL!,
+    url: process.env.DATABASE_URL || '',
   },
+  // Указывает, что мы используем SQL-файлы для миграций вместо TypeScript
+  verbose: true,
+  strict: true,
 } satisfies Config;
