@@ -1,8 +1,3 @@
----
-description: 
-globs: 
-alwaysApply: true
----
 # Development Rules for Error Prevention
 
 These rules aim to help prevent common errors and issues based on past development experience. Following these guidelines will lead to more robust and maintainable code.
@@ -183,5 +178,4 @@ These rules aim to help prevent common errors and issues based on past developme
    - Create small, focused components with clear responsibilities
    - Pass explicit props instead of large objects
    - Use proper TypeScript typing for component props
-   - Implement proper loading and error states
-
+   - Implement proper loading and error states 

@@ -7,6 +7,7 @@ import {
   integer,
   boolean,
   json,
+  jsonb,
   pgEnum,
   unique,
 } from 'drizzle-orm/pg-core';
@@ -16,12 +17,17 @@ export const projectVisibilityEnum = pgEnum('project_visibility', ['private', 'p
 export const projectStatusEnum = pgEnum('project_status', ['active', 'archived']);
 export const collaboratorRoleEnum = pgEnum('collaborator_role', ['viewer', 'editor', 'admin']);
 export const taxonomyTypeEnum = pgEnum('taxonomy_type', ['room', 'space', 'idea', 'design', 'color', 'style', 'general']);
+export const generationToolTypeEnum = pgEnum('generation_tool_type', ['design', 'redisign', 'textures', 'restyle', 'recolor', 'referenced', 'idea']);
+export const generationDesignTypeEnum = pgEnum('generation_design_type', ['Interior', 'Exterior', 'Garden', 'General']);
+export const generationPromptRoleEnum = pgEnum('generation_prompt_role', ['system', 'user', 'assistant']);
+export const systemRoleEnum = pgEnum('system_role', ['superadmin', 'moderator']);
 
 export const users = pgTable('users', {
   id: serial('id').primaryKey(),
   name: text('name'),
   email: varchar('email', { length: 255 }).notNull().unique(),
   image: text('image'),
+  systemRole: systemRoleEnum('system_role'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
@@ -191,12 +197,14 @@ export const taxonomies = pgTable('taxonomies', {
 
 export const taxonomiesTypeSlugIndex = unique('taxonomies_type_slug_idx').on(taxonomies.type, taxonomies.slug);
 
+export type Taxonomy = typeof taxonomies.$inferSelect;
+export type NewTaxonomy = typeof taxonomies.$inferInsert;
+
 export const taxonomiesRelations = relations(taxonomies, ({ one, many }) => ({
   parent: one(taxonomies, {
     fields: [taxonomies.parentId],
-    references: [taxonomies.id],
-  }),
-  children: many(taxonomies),
+    references: [taxonomies.id]
+  })
 }));
 
 export const projectTaxonomies = pgTable('project_taxonomies', {
@@ -211,12 +219,12 @@ export const projectTaxonomiesIndex = unique('project_taxonomies_idx').on(projec
 export const projectTaxonomiesRelations = relations(projectTaxonomies, ({ one }) => ({
   project: one(projects, {
     fields: [projectTaxonomies.projectId],
-    references: [projects.id],
+    references: [projects.id]
   }),
   taxonomy: one(taxonomies, {
     fields: [projectTaxonomies.taxonomyId],
-    references: [taxonomies.id],
-  }),
+    references: [taxonomies.id]
+  })
 }));
 
 export const projectsRelationsWithTaxonomy = relations(projects, ({ many }) => ({
@@ -342,6 +350,21 @@ export const boardsRelations = relations(spaces, ({ one, many }) => ({
   items: many(spaceItems),
 }));
 
+export const generationPrompts = pgTable('generation_prompts', {
+  id: serial('id').primaryKey(),
+  name: varchar('name').notNull().unique(),
+  toolType: generationToolTypeEnum('tool_type'),
+  designType: generationDesignTypeEnum('design_type'),
+  role: generationPromptRoleEnum('role').default('system'),
+  promptTemplate: text('prompt_template').notNull(),
+  negativePrompt: text('negative_prompt'),
+  variables: jsonb('variables'),
+  description: text('description'),
+  isActive: boolean('is_active').default(true).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 export type Team = typeof teams.$inferSelect;
@@ -361,6 +384,8 @@ export type TeamDataWithMembers = Team & {
     user: Pick<User, 'id' | 'name' | 'email'>;
   })[];
 };
+export type GenerationPrompt = typeof generationPrompts.$inferSelect;
+export type NewGenerationPrompt = typeof generationPrompts.$inferInsert;
 
 export enum ActivityType {
   SIGN_UP = 'SIGN_UP',

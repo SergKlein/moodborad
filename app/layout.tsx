@@ -4,7 +4,7 @@ import { Manrope } from 'next/font/google';
 import { UserProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
 import { Header } from '@/components/header';
-
+import { Footer } from '@/components/footer';
 export const metadata: Metadata = {
   title: 'Moodboard AI',
   description: 'AI-powered interior design moodboard creator',
@@ -32,6 +32,7 @@ export default function RootLayout({
         <UserProvider userPromise={userPromise}>
           <Header />
           <main className="flex-1">{children}</main>
+          <Footer />
         </UserProvider>
       </body>
     </html>

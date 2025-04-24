@@ -1,7 +1,7 @@
 export const images = {
   home: {
     hero: {
-      main: "/home/hero/main-hero.webp",
+      main: "/home/hero/hero_main.jpg",
     },
     features: {
       techVisualization: "/home/features/tech-visualization.webp",

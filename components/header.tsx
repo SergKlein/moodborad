@@ -7,7 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useUser } from "@/lib/auth";
-import { signOut } from "@/app/(login)/actions";
+import { signOut } from "@/app/(public)/(login)/actions";
 import { Home, LogOut, Users, Settings, Activity, Shield } from 'lucide-react';
 import {
   DropdownMenu,
@@ -137,27 +137,32 @@ export function Header() {
   const pathname = usePathname();
   const isDashboard = pathname.includes('/dashboard');
 
+  const publicNavItems = [
+    { href: '/', label: 'Home' },
+    { href: '/about', label: 'About' },
+    { href: '/contact', label: 'Contact' },
+  ];
+
   return (
     <header className={cn(
       "sticky top-0 z-50 w-full border-b h-16",
-      isDashboard 
-        ? "border-border bg-background" 
-        : "border-white/10 bg-black"
+      isDashboard ? "border-border bg-background" : "border-white/10 bg-black"
     )}>
       <div className="container h-full max-w-screen-2xl mx-auto flex items-center justify-between px-4 md:px-6">
-        {/* Компания лого */}
-        <Link href="/" className="flex items-center">
-          <Image 
-            src="/design/assets/logos/company_logo.svg" 
-            alt="Company Logo" 
-            width={180} 
-            height={53} 
-            className="h-10 w-auto"
-            priority
-          />
-        </Link>
+        {/* Левая часть: Лого */}
+        <div className="flex items-center">
+          <Link href="/" className="flex items-center mr-6">
+            <Image 
+              src="/design/assets/logos/company_logo.svg" 
+              alt="Company Logo" 
+              width={180} height={53} 
+              className="h-10 w-auto"
+              priority
+            />
+          </Link>
+        </div>
 
-        {/* Название продукта - центрированное */}
+        {/* Центрированное Название Продукта (остается здесь, позиционируется абсолютно) */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:block">
           <Link href="/" className="flex items-center">
             <span className={cn(
@@ -169,17 +174,37 @@ export function Header() {
             <span className="text-lg font-bold text-yellow-400">[ai]</span>
             <span className={cn(
               "ml-1.5 rounded-md px-1.5 py-0.5 text-xs font-medium",
-              isDashboard 
-                ? "bg-muted text-muted-foreground" 
-                : "bg-white/10 text-white/60"
+              isDashboard ? "bg-muted text-muted-foreground" : "bg-white/10 text-white/60"
             )}>
               beta
             </span>
           </Link>
         </div>
 
-        {/* Авторизация или меню пользователя */}
-        <div className="flex items-center gap-3">
+        {/* Правая часть: Навигация + Меню Пользователя */}
+        <div className="flex items-center gap-x-4 md:gap-x-6"> {/* Используем gap-* для отступов */} 
+          {/* --- Публичное Навигационное Меню --- */}
+          {!isDashboard && (
+            <nav className="hidden md:flex items-center space-x-6 mr-6">
+              {publicNavItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "text-sm font-medium transition-colors",
+                    pathname === item.href
+                      ? "text-white" 
+                      : "text-white/70 hover:text-white"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          )}
+          {/* --- Конец Публичного Меню --- */}
+
+          {/* Авторизация или меню пользователя (теперь после навигации) */}
           <Suspense fallback={<div className="h-9 w-[120px]" />}>
             <UserMenu />
           </Suspense>

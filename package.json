@@ -22,7 +22,8 @@
     "test:coverage": "dotenv -e .env.test vitest run --coverage",
     "test:integration": "dotenv -e .env.test vitest run /tests/integration",
     "test:ui": "dotenv -e .env.test vitest --ui",
-    "test:ci": "dotenv -e .env.test vitest run --coverage --reporter=junit"
+    "test:ci": "dotenv -e .env.test vitest run --coverage --reporter=junit",
+    "clean": "rm -rf .next && rm -rf node_modules && pnpm install"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.3",

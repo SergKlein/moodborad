@@ -1,21 +1,19 @@
 -- Create enums
 DO $$ BEGIN
     CREATE TYPE project_visibility AS ENUM ('private', 'public');
-EXCEPTION
-    WHEN duplicate_object THEN null;
-END $$;
+EXCEPTION WHEN duplicate_object THEN null; END $$;
 
 DO $$ BEGIN
     CREATE TYPE project_status AS ENUM ('active', 'archived');
-EXCEPTION
-    WHEN duplicate_object THEN null;
-END $$;
+EXCEPTION WHEN duplicate_object THEN null; END $$;
 
 DO $$ BEGIN
     CREATE TYPE collaborator_role AS ENUM ('viewer', 'editor', 'admin');
-EXCEPTION
-    WHEN duplicate_object THEN null;
-END $$;
+EXCEPTION WHEN duplicate_object THEN null; END $$;
+
+DO $$ BEGIN
+    CREATE TYPE taxonomy_type AS ENUM ('room', 'space', 'idea', 'design', 'color', 'style', 'general');
+EXCEPTION WHEN duplicate_object THEN null; END $$;
 
 -- Create projects table
 CREATE TABLE IF NOT EXISTS projects (
